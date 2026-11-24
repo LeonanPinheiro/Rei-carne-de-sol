@@ -4,6 +4,8 @@ Visão do produto: um sistema que concentra os pedidos diretos do O Rei da Carne
 
 As estórias estão agrupadas em épicos. Só a US 03 está detalhada; as demais são candidatas e serão escritas no mesmo modelo quando entrarem em uma Sprint. Itens marcados **[A DEFINIR]** dependem de decisão do grupo ou do restaurante.
 
+O andamento das tarefas de cada Sprint fica no [quadro do Trello](https://trello.com/b/FnCgakIm/rei-da-carne-do-sol-delivery).
+
 ## Épicos e estórias
 
 | Épico | Estória | Ator | Situação |

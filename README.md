@@ -13,6 +13,10 @@ O sistema concentra os pedidos diretos do restaurante e organiza o delivery: ate
 | Maria Luiza Benevides Cunha | 1250112092 | [A DEFINIR] | [A DEFINIR] |
 | Matheus Frazão Aguiar | [A CONFIRMAR] | Product Owner | Arquiteto de Software e Integrações |
 
+## Organização do trabalho
+
+As tarefas das Sprints ficam no quadro do Trello: [Rei da Carne de Sol · Delivery](https://trello.com/b/FnCgakIm/rei-da-carne-do-sol-delivery).
+
 ## Product Backlog
 
 O backlog completo, com épicos, estórias candidatas e regras em discussão, está em [docs/backlog-do-produto.md](docs/backlog-do-produto.md).
