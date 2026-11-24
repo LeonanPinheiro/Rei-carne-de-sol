@@ -145,7 +145,7 @@ def desenhar_moldura(canvas, doc):
     canvas.line(2 * cm, altura - 2.75 * cm, largura - 2 * cm, altura - 2.75 * cm)
     canvas.setFont("Helvetica", 9)
     canvas.drawRightString(largura - 2 * cm, 1.2 * cm, f"Pág. {doc.page} de {doc.total_paginas}")
-    canvas.drawString(2 * cm, 1.2 * cm, "Os 3 Devs · Análise Orientada a Objetos · UVA")
+    canvas.drawString(2 * cm, 1.2 * cm, "Os 4 Devs · Análise Orientada a Objetos · UVA")
     canvas.restoreState()
 
 
@@ -155,7 +155,7 @@ class Documento(BaseDocTemplate):
 
 def montar(total_paginas: int) -> int:
     doc = Documento(str(SAIDA), pagesize=A4, leftMargin=2 * cm, rightMargin=2 * cm,
-                    topMargin=3.3 * cm, bottomMargin=2 * cm, title=TITULO, author="Os 3 Devs")
+                    topMargin=3.3 * cm, bottomMargin=2 * cm, title=TITULO, author="Os 4 Devs")
     doc.total_paginas = total_paginas
     quadro = Frame(doc.leftMargin, doc.bottomMargin, doc.width, doc.height, id="corpo")
     doc.addPageTemplates([PageTemplate(id="pagina", frames=[quadro], onPage=desenhar_moldura)])

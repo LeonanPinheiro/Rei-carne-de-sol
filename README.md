@@ -1,6 +1,6 @@
 # O Rei da Carne de Sol · Sistema de Gestão de Pedidos e Delivery Urbano
 
-Trabalho A2 da disciplina **Análise Orientada a Objetos** (Universidade Veiga de Almeida), feito pelo grupo **Os 3 Devs** para o restaurante O Rei da Carne de Sol, no bairro Fazendinha, em Araruama (RJ).
+Trabalho A2 da disciplina **Análise Orientada a Objetos** (Universidade Veiga de Almeida), feito pelo grupo **Os 4 Devs** para o restaurante O Rei da Carne de Sol, no bairro Fazendinha, em Araruama (RJ).
 
 O sistema centraliza os pedidos do restaurante e organiza o delivery: agrupa os pedidos prontos por proximidade e gera rotas para os motoboys. Este repositório guarda as estórias de usuário e o protótipo em Python que as implementa.
 

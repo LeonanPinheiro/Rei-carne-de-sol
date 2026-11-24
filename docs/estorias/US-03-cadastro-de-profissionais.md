@@ -1,13 +1,13 @@
 # US 03 · Cadastro de Profissionais
 
 **O Rei da Carne de Sol · Sistema de Gestão de Pedidos e Delivery Urbano**
-Estória de Usuário · Grupo Os 3 Devs · Análise Orientada a Objetos (UVA)
+Estória de Usuário · Grupo Os 4 Devs · Análise Orientada a Objetos (UVA)
 
 ## Histórico de revisões
 
 | Nº versão | Data | Sumário das mudanças | Responsável pela revisão | Nome do arquivo |
 | --- | --- | --- | --- | --- |
-| 1 | 24/11/2026 | Criação da estória, cenários e padrões de comportamento | Os 3 Devs | US 03 Cadastro de Profissionais |
+| 1 | 24/11/2026 | Criação da estória, cenários e padrões de comportamento | Os 4 Devs | US 03 Cadastro de Profissionais |
 
 ## Descrição
 
