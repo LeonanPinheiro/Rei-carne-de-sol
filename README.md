@@ -2,7 +2,7 @@
 
 Trabalho A2 da disciplina **Análise Orientada a Objetos** (Universidade Veiga de Almeida), feito pelo grupo **Os 4 Devs** para o restaurante O Rei da Carne de Sol, no bairro Fazendinha, em Araruama (RJ).
 
-O sistema centraliza os pedidos do restaurante e organiza o delivery: agrupa os pedidos prontos por proximidade e gera rotas para os motoboys. Este repositório guarda as estórias de usuário e o protótipo em Python que as implementa.
+O sistema concentra os pedidos diretos do restaurante e organiza o delivery: atendimento por um agente de IA no WhatsApp, cardápio online, cadastro automático do cliente pelo telefone, pontos e cashback, fila da cozinha e roteirização das entregas. Este repositório guarda a documentação (estórias de usuário e regras) e o código de todo o sistema.
 
 ## Equipe
 
@@ -15,11 +15,15 @@ O sistema centraliza os pedidos do restaurante e organiza o delivery: agrupa os 
 
 ## Product Backlog
 
-| Estória | Título | Prioridade | Situação |
-| --- | --- | --- | --- |
-| US 01 | Recepção de Pedidos e Geocodificação de Endereço | 1-Alta | Especificada no documento do trabalho |
-| US 02 | Agrupamento e Roteirização de Pedidos (GPS) | 1-Alta | Especificada no documento do trabalho |
-| [US 03](docs/estorias/US-03-cadastro-de-profissionais.md) | Cadastro de Profissionais | 1-Alta | Especificada e implementada |
+O backlog completo, com épicos, estórias candidatas e regras em discussão, está em [docs/backlog-do-produto.md](docs/backlog-do-produto.md).
+
+| Épico | Estórias | Situação |
+| --- | --- | --- |
+| E1 · Pedidos e delivery | US 01, US 02 | Especificadas |
+| E2 · Cadastros | [US 03 Profissionais](docs/estorias/US-03-cadastro-de-profissionais.md), US 04 Clientes pelo WhatsApp | US 03 implementada |
+| E3 · Atendimento por WhatsApp (agente de IA) | US 05, US 06 | Candidatas |
+| E4 · Cardápio online | US 07, US 08 | Candidatas |
+| E5 · Fidelidade (pontos e cashback) | US 09 a US 12 | Candidatas |
 
 As regras de negócio, o modelo de dados e as mensagens citadas nas estórias estão no [catálogo de referências](docs/catalogo-de-referencias.md).
 
