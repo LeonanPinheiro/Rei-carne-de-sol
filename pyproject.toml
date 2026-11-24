@@ -1,0 +1,13 @@
+[project]
+name = "rei-carne-de-sol"
+version = "0.1.0"
+description = "Sistema de Gestão de Pedidos e Delivery Urbano do O Rei da Carne de Sol (trabalho acadêmico, UVA)"
+requires-python = ">=3.10"
+dependencies = ["openpyxl>=3.1"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
