@@ -1,16 +1,16 @@
 # US 03 · Cadastro de Profissionais
 
 **O Rei da Carne de Sol · Sistema Chatbot WhatsApp**
-Estória de Usuário · Grupo Os 4 Devs · Análise Orientada a Objetos (UVA)
+Estória de Usuário · Grupo MMLA · Análise Orientada a Objetos (UVA)
 
 ## Histórico de revisões
 
 | Nº versão | Data | Sumário das mudanças | Responsável pela revisão | Nome do arquivo |
 | --- | --- | --- | --- | --- |
-| 1 | 24/11/2026 | Criação da estória, cenários e padrões de comportamento | Os 4 Devs | US 03 Cadastro de Profissionais |
-| 2 | 24/11/2026 | Alinhamento à Proposta de Projeto: funções Gestor, Atendente, Cozinha e Entregador; entregador identificado pelo celular do WhatsApp; regra de entrega em andamento | Os 4 Devs | US 03 Cadastro de Profissionais |
+| 1 | 24/11/2026 | Criação da estória, cenários e padrões de comportamento | Grupo MMLA | US 03 Cadastro de Profissionais |
+| 2 | 24/11/2026 | Alinhamento à Proposta de Projeto: funções Gestor, Atendente, Cozinha e Entregador; entregador identificado pelo celular do WhatsApp; regra de entrega em andamento | Grupo MMLA | US 03 Cadastro de Profissionais |
 
-## Equipe · Os 4 Devs
+## Equipe · Grupo MMLA
 
 | Integrante | Matrícula |
 | --- | --- |

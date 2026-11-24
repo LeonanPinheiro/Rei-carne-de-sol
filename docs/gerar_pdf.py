@@ -142,7 +142,7 @@ def desenhar_moldura(canvas, doc):
     canvas.line(2 * cm, altura - 2.75 * cm, largura - 2 * cm, altura - 2.75 * cm)
     canvas.setFont("Helvetica", 9)
     canvas.drawRightString(largura - 2 * cm, 1.2 * cm, f"Pág. {doc.page} de {doc.total_paginas}")
-    canvas.drawString(2 * cm, 1.2 * cm, "Os 4 Devs · Análise Orientada a Objetos · UVA")
+    canvas.drawString(2 * cm, 1.2 * cm, "Grupo MMLA · Análise Orientada a Objetos · UVA")
     canvas.restoreState()
 
 
@@ -159,7 +159,7 @@ def montar(estoria: Path, total_paginas: int) -> int:
     tipo = "Estória de Profissional:" if "Estória de Profissional" in linhas[3] else "Estória de Usuário:"
     doc = Documento(str(estoria.with_suffix(".pdf")), pagesize=A4, leftMargin=2 * cm,
                     rightMargin=2 * cm, topMargin=3.3 * cm, bottomMargin=2 * cm,
-                    title=titulo, author="Os 4 Devs")
+                    title=titulo, author="Grupo MMLA")
     doc.total_paginas, doc.tipo, doc.titulo = total_paginas, tipo, titulo
     quadro = Frame(doc.leftMargin, doc.bottomMargin, doc.width, doc.height, id="corpo")
     doc.addPageTemplates([PageTemplate(id="pagina", frames=[quadro], onPage=desenhar_moldura)])

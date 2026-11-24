@@ -1,6 +1,6 @@
 # O Rei da Carne de Sol · Sistema Chatbot WhatsApp
 
-Trabalho A2 da disciplina **Análise Orientada a Objetos** (Universidade Veiga de Almeida), feito pelo grupo **Os 4 Devs** para o restaurante O Rei da Carne de Sol, no bairro Fazendinha, em Araruama (RJ).
+Trabalho A2 da disciplina **Análise Orientada a Objetos** (Universidade Veiga de Almeida), feito pelo **Grupo MMLA** (Matheus, Maria, Leonan e Angel) para o restaurante O Rei da Carne de Sol, no bairro Fazendinha, em Araruama (RJ).
 
 O sistema tem dois lados:
 

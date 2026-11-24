@@ -1,15 +1,15 @@
 # US 02 · Gerenciar Pedidos e Atendimento Humano no Painel
 
 **O Rei da Carne de Sol · Sistema Chatbot WhatsApp**
-Estória de Profissional · Grupo Os 4 Devs · Análise Orientada a Objetos (UVA)
+Estória de Profissional · Grupo MMLA · Análise Orientada a Objetos (UVA)
 
 ## Histórico de revisões
 
 | Nº versão | Data | Sumário das mudanças | Responsável pela revisão | Nome do arquivo |
 | --- | --- | --- | --- | --- |
-| 1 | 24/11/2026 | Criação da estória a partir da Proposta de Projeto de 14/11/2026 | Os 4 Devs | US 02 Gerenciar Pedidos e Atendimento Humano |
+| 1 | 24/11/2026 | Criação da estória a partir da Proposta de Projeto de 14/11/2026 | Grupo MMLA | US 02 Gerenciar Pedidos e Atendimento Humano |
 
-## Equipe · Os 4 Devs
+## Equipe · Grupo MMLA
 
 | Integrante | Matrícula |
 | --- | --- |

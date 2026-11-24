@@ -46,7 +46,7 @@ Requisitos, regras de negócio, casos de uso, modelo de dados e mensagens citado
 | RN08 | Profissional com status Ativo não pode ser excluído; deve ser desativado antes, para preservar o histórico. | US 03 |
 | RN09 | Entregador com pedido em status "Saiu para Entrega" não pode ser desativado nem excluído. | US 02, US 03 |
 | RN10 | O status do pedido segue a ordem Recebido, Em preparo, Pronto, Saiu para Entrega, Entregue. Só é possível avançar uma etapa por vez ou cancelar antes da saída para entrega. | US 02 |
-| RN11 | Depois de 3 mensagens seguidas não compreendidas, o bot transfere a conversa para atendimento humano. | US 01, US 02 |
+| RN11 | Detalha o UC05: depois de 3 mensagens seguidas não compreendidas, o bot transfere a conversa para atendimento humano. | US 01, US 02 |
 
 ## Modelo de dados (MED)
 
