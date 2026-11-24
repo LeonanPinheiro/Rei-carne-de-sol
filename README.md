@@ -6,11 +6,12 @@ O sistema centraliza os pedidos do restaurante e organiza o delivery: agrupa os 
 
 ## Equipe
 
-| Integrante | Papel Scrum | Função técnica |
-| --- | --- | --- |
-| Matheus Frazão | Product Owner | Arquiteto de Software e Integrações |
-| Leonan Costa | Scrum Master | Desenvolvedor Backend e Banco de Dados |
-| Angel Moreira | Desenvolvedor | Desenvolvedor Web (Frontend) |
+| Integrante | Matrícula | Papel Scrum | Função técnica |
+| --- | --- | --- | --- |
+| Angel Moreira Soares Guimarães | 1250103118 | Desenvolvedor | Desenvolvedor Web (Frontend) |
+| Leonan Pinheiro Costa | 1250103989 | Scrum Master | Desenvolvedor Backend e Banco de Dados |
+| Maria Luiza Benevides Cunha | 1250112092 | [A DEFINIR] | [A DEFINIR] |
+| Matheus Frazão Aguiar | [A CONFIRMAR] | Product Owner | Arquiteto de Software e Integrações |
 
 ## Product Backlog
 

@@ -9,6 +9,15 @@ Estória de Usuário · Grupo Os 4 Devs · Análise Orientada a Objetos (UVA)
 | --- | --- | --- | --- | --- |
 | 1 | 24/11/2026 | Criação da estória, cenários e padrões de comportamento | Os 4 Devs | US 03 Cadastro de Profissionais |
 
+## Equipe · Os 4 Devs
+
+| Integrante | Matrícula |
+| --- | --- |
+| Angel Moreira Soares Guimarães | 1250103118 |
+| Leonan Pinheiro Costa | 1250103989 |
+| Maria Luiza Benevides Cunha | 1250112092 |
+| Matheus Frazão Aguiar | [A CONFIRMAR] |
+
 ## Descrição
 
 Como um **gerente**, eu gostaria de manter o cadastro dos **profissionais** do restaurante (atendentes, cozinheiros, expedidores e entregadores), para que a cozinha e o despacho trabalhem apenas com pessoas ativas e com dados corretos.

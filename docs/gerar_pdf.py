@@ -55,6 +55,8 @@ def larguras(cabecalho):
     total = 17 * cm
     if n == 7:  # tabela de cenários, mesmas colunas da US 30
         return [p * total for p in (0.16, 0.15, 0.14, 0.08, 0.19, 0.16, 0.12)]
+    if n == 2 and cabecalho[0] == "Integrante":
+        return [0.55 * total, 0.45 * total]
     if n == 2:
         return [0.17 * total, 0.83 * total]
     if n == 3 and cabecalho[0].startswith("Atributo"):
