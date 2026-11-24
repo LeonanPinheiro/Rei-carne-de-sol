@@ -11,12 +11,12 @@ O bot não usa IA generativa: as respostas são pré-configuradas, o que elimina
 
 ## Equipe
 
-| Integrante | Matrícula | Papel Scrum | Função técnica |
-| --- | --- | --- | --- |
-| Angel Moreira Soares Guimarães | 1250103118 | Desenvolvedor | Desenvolvedor Web (Frontend) |
-| Leonan Pinheiro Costa | 1250103989 | Scrum Master | Desenvolvedor Backend e Banco de Dados |
-| Maria Luiza Benevides Cunha | 1250112092 | Desenvolvedora | Desenvolvedora de Automação e UX/UI |
-| Matheus Frazão Aguiar | [A CONFIRMAR] | Product Owner | Arquiteto de Software e Integrações |
+| Integrante | Papel Scrum | Função técnica |
+| --- | --- | --- |
+| Angel Moreira Soares Guimarães | Desenvolvedor | Desenvolvedor Web (Frontend) |
+| Leonan Pinheiro Costa | Scrum Master | Desenvolvedor Backend e Banco de Dados |
+| Maria Luiza Benevides Cunha | Desenvolvedora | Desenvolvedora de Automação e UX/UI |
+| Matheus de Aguiar Maia Frazão Serrado | Product Owner | Arquiteto de Software e Integrações |
 
 ## Tecnologias
 
