@@ -14,14 +14,14 @@ CPF_JOAO = "111.444.777-35"
 
 
 @pytest.fixture
-def em_rota():
-    """IDs de entregadores com lote Em Rota (informação que vem da US 02)."""
+def em_entrega():
+    """IDs de entregadores com pedido Saiu para Entrega (vem da US 02)."""
     return set()
 
 
 @pytest.fixture
-def servico(em_rota):
-    return ServicoProfissionais(entregadores_em_rota=lambda: em_rota)
+def servico(em_entrega):
+    return ServicoProfissionais(entregadores_em_entrega=lambda: em_entrega)
 
 
 def incluir_atendente(servico, status=Status.ATIVO):
@@ -30,8 +30,8 @@ def incluir_atendente(servico, status=Status.ATIVO):
 
 
 def incluir_entregador(servico, status=Status.ATIVO):
-    return servico.incluir("João Souza", CPF_JOAO, "22 99999-0000", "joao@email.com",
-                           Funcao.ENTREGADOR, status, cnh="12345678901", placa="rio2a18")
+    return servico.incluir("João Souza", CPF_JOAO, "(22) 99999-0000", "joao@email.com",
+                           Funcao.ENTREGADOR, status)
 
 
 # ---------- Incluir ----------
@@ -45,13 +45,13 @@ def test_cpo_1_1_incluir_profissional(servico):
 def test_cpo_1_2_incluir_entregador(servico):
     resultado = incluir_entregador(servico)
     assert resultado.sucesso and resultado.mensagens == ["MSG 01"]
-    assert resultado.dados.placa == "RIO2A18"
+    assert resultado.dados.telefone == "22999990000"
 
 
 def test_cpo_1_3_incluir_profissional_ja_cadastrado(servico):
     incluir_atendente(servico)
     resultado = servico.incluir("Maria Souza", "52998224725", "22988241488",
-                                "outra@email.com", Funcao.COZINHEIRO)
+                                "outra@email.com", Funcao.COZINHA)
     assert not resultado.sucesso and resultado.mensagens == ["MSG 02"]
     assert len(servico.listar()) == 1
 
@@ -65,21 +65,20 @@ def test_cpo_1_4_incluir_com_erros_de_validacao(servico):
     assert servico.listar() == []
 
 
-def test_cpo_1_5_incluir_entregador_sem_cnh_ou_placa(servico):
-    resultado = servico.incluir("João Souza", CPF_JOAO, "22999990000", "joao@email.com",
+def test_cpo_1_5_incluir_entregador_sem_celular(servico):
+    resultado = servico.incluir("João Souza", CPF_JOAO, "(22) 2665-1234", "joao@email.com",
                                 Funcao.ENTREGADOR)
-    assert not resultado.sucesso
-    assert resultado.mensagens == ["MSG 03", "MSG 03"]
-    assert any("campo CNH" in t for t in resultado.textos)
-    assert any("campo PLACA" in t for t in resultado.textos)
+    assert not resultado.sucesso and resultado.mensagens == ["MSG 03"]
+    assert "campo TELEFONE deve seguir o formato celular com WhatsApp" in resultado.textos[0]
+    assert servico.listar() == []
 
 
 # ---------- Alterar ----------
 def test_cpo_2_1_alterar_dados(servico):
     maria = incluir_atendente(servico).dados
-    resultado = servico.alterar(maria.id, telefone="(22) 2665-1234", funcao=Funcao.EXPEDIDOR)
+    resultado = servico.alterar(maria.id, telefone="(22) 2665-1234", funcao=Funcao.COZINHA)
     assert resultado.sucesso and resultado.mensagens == ["MSG 04"]
-    assert servico.detalhes(maria.id).dados.funcao == Funcao.EXPEDIDOR
+    assert servico.detalhes(maria.id).dados.funcao == Funcao.COZINHA
 
 
 def test_cpo_2_2_alterar_com_erro_de_validacao(servico):
@@ -133,9 +132,9 @@ def test_cpo_4_3_nao_permite_excluir_profissional_ativo(servico):
     assert len(servico.listar()) == 1
 
 
-def test_cpo_4_3_nao_permite_excluir_entregador_em_rota(servico, em_rota):
+def test_cpo_4_3_nao_permite_excluir_entregador_em_entrega(servico, em_entrega):
     joao = incluir_entregador(servico, Status.INATIVO).dados
-    em_rota.add(joao.id)
+    em_entrega.add(joao.id)
     resultado = servico.excluir(joao.id, confirmado=True)
     assert resultado.mensagens == ["MSG 05", "MSG 14"]
 
@@ -148,7 +147,7 @@ def test_cpo_5_1_exportar_excel_com_cpf_mascarado(servico, tmp_path):
     assert servico.exportar_excel(arquivo).sucesso
 
     linhas = list(load_workbook(arquivo).active.iter_rows(values_only=True))
-    assert linhas[0][2] == "CPF" and "CNH" not in linhas[0]  # RNF 01
+    assert linhas[0][2] == "CPF"  # RNF03
     assert linhas[1][2] == "529.***.***-25"
     assert len(linhas) == 3
 
@@ -168,10 +167,10 @@ def test_cpo_7_1_desativar_selecionados(servico):
     assert not any(p.ativo for p in servico.listar())
 
 
-def test_cpo_7_2_nao_permite_desativar_entregador_em_rota(servico, em_rota):
+def test_cpo_7_2_nao_permite_desativar_entregador_em_entrega(servico, em_entrega):
     maria = incluir_atendente(servico).dados
     joao = incluir_entregador(servico).dados
-    em_rota.add(joao.id)
+    em_entrega.add(joao.id)
     resultado = servico.desativar_selecionados([maria.id, joao.id])
     assert not resultado.sucesso and resultado.mensagens == ["MSG 14"]
     assert servico.detalhes(joao.id).dados.ativo

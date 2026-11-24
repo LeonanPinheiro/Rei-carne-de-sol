@@ -1,4 +1,4 @@
-"""Validações de formato dos campos do profissional (MED 03 e RNE 07).
+"""Validações de formato dos campos do profissional (MED 03 e RN07).
 
 Cada validador devolve None se o valor é válido, ou o texto do formato
 esperado, que entra na MSG 03.
@@ -37,7 +37,15 @@ def validar_cpf(cpf: str) -> Optional[str]:
 def validar_telefone(telefone: str) -> Optional[str]:
     if len(somente_digitos(telefone)) in (10, 11):
         return None
-    return "(00) 00000-0000"
+    return "(00) 0000-0000 ou (00) 00000-0000"
+
+
+def validar_celular(telefone: str) -> Optional[str]:
+    """Celular com WhatsApp: DDD + 9 + 8 dígitos (RN07)."""
+    numeros = somente_digitos(telefone)
+    if len(numeros) == 11 and numeros[2] == "9":
+        return None
+    return "celular com WhatsApp, (00) 90000-0000"
 
 
 def validar_email(email: str) -> Optional[str]:
@@ -46,31 +54,16 @@ def validar_email(email: str) -> Optional[str]:
     return "nome@dominio.com"
 
 
-def validar_cnh(cnh: Optional[str]) -> Optional[str]:
-    if len(somente_digitos(cnh or "")) == 11:
-        return None
-    return "11 dígitos"
-
-
-def validar_placa(placa: Optional[str]) -> Optional[str]:
-    if re.fullmatch(r"[A-Z]{3}\d[A-Z0-9]\d{2}", (placa or "").upper().replace("-", "")):
-        return None
-    return "ABC1234 ou ABC1D23"
-
-
-def validar_profissional(nome, cpf, telefone, email, funcao, cnh=None, placa=None):
+def validar_profissional(nome, cpf, telefone, email, funcao):
     """Devolve a lista de erros como pares (campo, formato esperado)."""
+    validar_fone = validar_celular if funcao == Funcao.ENTREGADOR else validar_telefone
     erros = []
     for campo, erro in (
         ("NOME", validar_nome(nome)),
         ("CPF", validar_cpf(cpf)),
-        ("TELEFONE", validar_telefone(telefone)),
+        ("TELEFONE", validar_fone(telefone)),
         ("E-MAIL", validar_email(email)),
     ):
         if erro:
             erros.append((campo, erro))
-    if funcao == Funcao.ENTREGADOR:  # RNE 07
-        for campo, erro in (("CNH", validar_cnh(cnh)), ("PLACA", validar_placa(placa))):
-            if erro:
-                erros.append((campo, erro))
     return erros

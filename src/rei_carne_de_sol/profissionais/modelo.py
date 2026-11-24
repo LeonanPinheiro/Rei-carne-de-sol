@@ -6,11 +6,10 @@ from typing import Optional
 
 
 class Funcao(str, Enum):
+    GESTOR = "Gestor"
     ATENDENTE = "Atendente"
-    COZINHEIRO = "Cozinheiro"
-    EXPEDIDOR = "Expedidor"
+    COZINHA = "Cozinha"
     ENTREGADOR = "Entregador"
-    GERENTE = "Gerente"
 
 
 class Status(str, Enum):
@@ -26,8 +25,6 @@ class Profissional:
     email: str
     funcao: Funcao
     status: Status = Status.ATIVO
-    cnh: Optional[str] = None
-    placa: Optional[str] = None
     id: Optional[int] = field(default=None, compare=False)
 
     @property
@@ -36,5 +33,5 @@ class Profissional:
 
     @property
     def cpf_mascarado(self) -> str:
-        """CPF exibido na lista e na planilha (RNF 01 · LGPD): 529.***.***-25."""
+        """CPF exibido na lista e na planilha (RNF03 · LGPD): 529.***.***-25."""
         return f"{self.cpf[:3]}.***.***-{self.cpf[9:]}"

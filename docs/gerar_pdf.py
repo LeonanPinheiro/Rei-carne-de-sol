@@ -1,7 +1,7 @@
-"""Gera o PDF da estória no formato da disciplina a partir dos arquivos Markdown.
+"""Gera o PDF de cada estória no formato da disciplina a partir dos arquivos Markdown.
 
 Uso: python docs/gerar_pdf.py
-Saída: docs/estorias/US-03-cadastro-de-profissionais.pdf
+Saída: um PDF ao lado de cada docs/estorias/US-*.md
 """
 
 import re
@@ -16,13 +16,8 @@ from reportlab.platypus import (BaseDocTemplate, Frame, PageBreak, PageTemplate,
                                 Paragraph, Spacer, Table, TableStyle)
 
 PASTA = Path(__file__).parent
-ESTORIA = PASTA / "estorias" / "US-03-cadastro-de-profissionais.md"
 CATALOGO = PASTA / "catalogo-de-referencias.md"
-SAIDA = PASTA / "estorias" / "US-03-cadastro-de-profissionais.pdf"
-
-SISTEMA = "O REI DA CARNE DE SOL – GESTÃO DE PEDIDOS E DELIVERY"
-TIPO = "Estória de Usuário:"
-TITULO = "US 03 Cadastro de Profissionais"
+SISTEMA = "O REI DA CARNE DE SOL – SISTEMA CHATBOT WHATSAPP"
 
 base = ParagraphStyle("base", fontName="Helvetica", fontSize=10, leading=13.5,
                       alignment=TA_JUSTIFY, spaceAfter=4)
@@ -54,14 +49,14 @@ def larguras(cabecalho):
     n = len(cabecalho)
     total = 17 * cm
     if n == 7:  # tabela de cenários, mesmas colunas da US 30
-        return [p * total for p in (0.16, 0.15, 0.14, 0.08, 0.19, 0.16, 0.12)]
+        return [p * total for p in (0.15, 0.15, 0.14, 0.11, 0.16, 0.17, 0.12)]
     if n == 2 and cabecalho[0] == "Integrante":
         return [0.55 * total, 0.45 * total]
     if n == 2:
         return [0.17 * total, 0.83 * total]
     if n == 3 and cabecalho[0].startswith("Atributo"):
         return [0.18 * total, 0.12 * total, 0.70 * total]
-    if n == 3 and cabecalho[1] == "Regra":
+    if n == 3 and cabecalho[0] == "Código" and cabecalho[1] != "Entidade":
         return [0.12 * total, 0.70 * total, 0.18 * total]
     if n == 3 and cabecalho[1] == "Entidade":
         return [0.12 * total, 0.18 * total, 0.70 * total]
@@ -141,8 +136,8 @@ def desenhar_moldura(canvas, doc):
     canvas.setFont("Helvetica-Bold", 12)
     canvas.drawCentredString(largura / 2, altura - 1.4 * cm, SISTEMA)
     canvas.setFont("Helvetica-Bold", 10)
-    canvas.drawCentredString(largura / 2, altura - 1.95 * cm, TIPO)
-    canvas.drawCentredString(largura / 2, altura - 2.45 * cm, TITULO)
+    canvas.drawCentredString(largura / 2, altura - 1.95 * cm, doc.tipo)
+    canvas.drawCentredString(largura / 2, altura - 2.45 * cm, doc.titulo)
     canvas.setLineWidth(0.6)
     canvas.line(2 * cm, altura - 2.75 * cm, largura - 2 * cm, altura - 2.75 * cm)
     canvas.setFont("Helvetica", 9)
@@ -153,16 +148,22 @@ def desenhar_moldura(canvas, doc):
 
 class Documento(BaseDocTemplate):
     total_paginas = 0
+    tipo = ""
+    titulo = ""
 
 
-def montar(total_paginas: int) -> int:
-    doc = Documento(str(SAIDA), pagesize=A4, leftMargin=2 * cm, rightMargin=2 * cm,
-                    topMargin=3.3 * cm, bottomMargin=2 * cm, title=TITULO, author="Os 4 Devs")
-    doc.total_paginas = total_paginas
+def montar(estoria: Path, total_paginas: int) -> int:
+    texto = estoria.read_text(encoding="utf-8")
+    linhas = texto.splitlines()
+    titulo = linhas[0].lstrip("# ").replace(" · ", " ", 1)
+    tipo = "Estória de Profissional:" if "Estória de Profissional" in linhas[3] else "Estória de Usuário:"
+    doc = Documento(str(estoria.with_suffix(".pdf")), pagesize=A4, leftMargin=2 * cm,
+                    rightMargin=2 * cm, topMargin=3.3 * cm, bottomMargin=2 * cm,
+                    title=titulo, author="Os 4 Devs")
+    doc.total_paginas, doc.tipo, doc.titulo = total_paginas, tipo, titulo
     quadro = Frame(doc.leftMargin, doc.bottomMargin, doc.width, doc.height, id="corpo")
     doc.addPageTemplates([PageTemplate(id="pagina", frames=[quadro], onPage=desenhar_moldura)])
 
-    texto = ESTORIA.read_text(encoding="utf-8")
     historico, resto = texto.split("## Descrição", 1)
     corpo = markdown_para_flowables(historico, pular_ate="## Histórico")
     corpo.append(PageBreak())
@@ -180,6 +181,7 @@ def montar(total_paginas: int) -> int:
 
 
 if __name__ == "__main__":
-    paginas = montar(0)  # primeira passada conta as páginas
-    montar(paginas)
-    print(f"{SAIDA} ({paginas} páginas)")
+    for estoria in sorted((PASTA / "estorias").glob("US-*.md")):
+        paginas = montar(estoria, 0)  # primeira passada conta as páginas
+        montar(estoria, paginas)
+        print(f"{estoria.with_suffix('.pdf').name} ({paginas} páginas)")

@@ -1,41 +1,28 @@
 # Product Backlog
 
-Visão do produto: um sistema que concentra os pedidos diretos do O Rei da Carne de Sol (WhatsApp e site), organiza a cozinha e o delivery e fideliza o cliente com pontos e cashback.
+**Visão do produto:** um chatbot de WhatsApp com menus em árvore de decisão, sem IA generativa, que atende o cliente do O Rei da Carne de Sol do cardápio à entrega, com rastreio pelo GPS nativo do WhatsApp e cashback. Do lado do restaurante, um painel web organiza os pedidos e os pedidos de atendimento humano. O pagamento é sempre feito na entrega.
 
-As estórias estão agrupadas em épicos. Só a US 03 está detalhada; as demais são candidatas e serão escritas no mesmo modelo quando entrarem em uma Sprint. Itens marcados **[A DEFINIR]** dependem de decisão do grupo ou do restaurante.
+Fonte: [Proposta de Projeto](proposta/Proposta_de_Projeto_-_Rei_da_Carne_de_Sol.pdf) de 14/11/2026. O andamento das tarefas fica no [quadro do Trello](https://trello.com/b/FnCgakIm/rei-da-carne-do-sol-delivery). Requisitos, regras e mensagens estão no [catálogo de referências](catalogo-de-referencias.md).
 
-O andamento das tarefas de cada Sprint fica no [quadro do Trello](https://trello.com/b/FnCgakIm/rei-da-carne-do-sol-delivery).
+## Estórias
 
-## Épicos e estórias
+| Estória | Tipo | Título | Casos de uso e requisitos | Prioridade | Situação |
+| --- | --- | --- | --- | --- | --- |
+| US 01 | História do Usuário | Fazer pedido pelo WhatsApp (cardápio, pedido, rastreio e falar com pessoa) | UC01, UC02, UC03, UC05 · RF01, RF02, RF03, RF05 | 1-Alta | Em elaboração pelo grupo |
+| [US 02](estorias/US-02-gerenciar-pedidos-e-atendimento-humano.md) | História do Profissional | Gerenciar pedidos e atendimento humano no painel | UC04, UC05 · RF03, RF05, RF06 | 1-Alta | Especificada |
+| [US 03](estorias/US-03-cadastro-de-profissionais.md) | Estória de apoio | Cadastro de profissionais | UC03, UC04 | 2-Média | Especificada e implementada |
+| US 04 | Estória de usuário | Acumular e resgatar cashback | RF04 · RN05 | 2-Média | Candidata |
+| US 05 | Estória de usuário | Identificar o cliente pelo número do WhatsApp (novo ou recorrente) | MED 01 | 2-Média | Candidata |
 
-| Épico | Estória | Ator | Situação |
-| --- | --- | --- | --- |
-| E1 · Pedidos e delivery | US 01 Recepção de Pedidos e Geocodificação de Endereço | Atendente | Especificada no documento do trabalho |
-| E1 · Pedidos e delivery | US 02 Agrupamento e Roteirização de Pedidos (GPS) | Expedidor | Especificada no documento do trabalho |
-| E2 · Cadastros | [US 03 Cadastro de Profissionais](estorias/US-03-cadastro-de-profissionais.md) | Gerente | Especificada e implementada |
-| E2 · Cadastros | US 04 Cadastro automático de cliente pelo WhatsApp | Cliente | Candidata |
-| E3 · Atendimento por WhatsApp | US 05 Fazer pedido pelo WhatsApp com o agente de IA | Cliente | Candidata |
-| E3 · Atendimento por WhatsApp | US 06 Transferir a conversa para um atendente | Cliente, Atendente | Candidata |
-| E4 · Cardápio online | US 07 Manter o cardápio (itens, preços, disponibilidade) | Gerente | Candidata |
-| E4 · Cardápio online | US 08 Consultar o cardápio online | Cliente | Candidata |
-| E5 · Fidelidade | US 09 Acumular pontos e cashback em pedidos diretos | Cliente | Candidata |
-| E5 · Fidelidade | US 10 Resgatar cashback em um pedido | Cliente | Candidata |
-| E5 · Fidelidade | US 11 Consultar saldo de pontos e cashback | Cliente | Candidata |
-| E5 · Fidelidade | US 12 Configurar as regras de pontos e cashback | Gerente | Candidata |
+## Decisões em aberto
 
-## Regras de negócio candidatas
-
-| Código | Regra | Situação |
-| --- | --- | --- |
-| RNE 10 | O telefone do WhatsApp identifica o cliente de forma única. | Proposta |
-| RNE 11 | O cliente só é cadastrado depois de aceitar o aviso de uso de dados (LGPD). | Proposta |
-| RNE 12 | Pontos e cashback valem apenas para pedidos diretos (WhatsApp e site), não para pedidos do iFood. | [A DEFINIR] |
-| RNE 13 | Percentual de cashback, pontos por real gasto, validade e valor mínimo de resgate. | [A DEFINIR] |
-| RNE 14 | O agente de IA não confirma pedido nem pagamento sem resumo aprovado pelo cliente, e transfere para um atendente quando não entende o pedido. | Proposta |
-
-## Novos atores
-
-| Ator | Papel |
+| Decisão | Por que importa |
 | --- | --- |
-| Agente de IA (WhatsApp) | Ator externo: conversa com o cliente, consulta o cardápio, monta o pedido e o envia para a fila |
-| WhatsApp Business Platform | Ator externo: canal oficial da Meta por onde as mensagens entram e saem |
+| Quem entrega os pedidos feitos pelo WhatsApp? | Na entrevista, o restaurante disse que usa motoboy do aplicativo, escolhido automaticamente pelo app. O rastreio (UC03, RF03) depende de um entregador que compartilhe a localização pelo WhatsApp. |
+| Valor mínimo para resgate e percentual do cashback | A RN05 exige um valor mínimo, mas não diz qual. O percentual também não foi definido. |
+| Pedidos do iFood e do 99 Food acumulam cashback? | Se só os pedidos diretos acumularem, o cashback vira motivo para o cliente pedir pelo WhatsApp. |
+| Quantas mensagens não compreendidas disparam o transbordo? | A US 02 usa 3 (RN11). O UC05 só diz "repetidas vezes". |
+
+## Histórico
+
+As estórias US 01 (Recepção de Pedidos e Geocodificação) e US 02 (Agrupamento e Roteirização por GPS) da versão anterior do trabalho foram substituídas pela Proposta de Projeto de 14/11/2026, que troca a roteirização pela localização nativa do WhatsApp.

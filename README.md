@@ -1,8 +1,13 @@
-# O Rei da Carne de Sol · Sistema de Gestão de Pedidos e Delivery Urbano
+# O Rei da Carne de Sol · Sistema Chatbot WhatsApp
 
 Trabalho A2 da disciplina **Análise Orientada a Objetos** (Universidade Veiga de Almeida), feito pelo grupo **Os 4 Devs** para o restaurante O Rei da Carne de Sol, no bairro Fazendinha, em Araruama (RJ).
 
-O sistema concentra os pedidos diretos do restaurante e organiza o delivery: atendimento por um agente de IA no WhatsApp, cardápio online, cadastro automático do cliente pelo telefone, pontos e cashback, fila da cozinha e roteirização das entregas. Este repositório guarda a documentação (estórias de usuário e regras) e o código de todo o sistema.
+O sistema tem dois lados:
+
+- **Cliente:** um chatbot no WhatsApp, com menus em árvore de decisão e linguagem nordestina, para ver o cardápio, fazer o pedido, acumular cashback, acompanhar o status, receber a localização do entregador pelo GPS nativo do WhatsApp e pedir para falar com uma pessoa a qualquer momento. O pagamento é feito na entrega.
+- **Restaurante:** um painel web para organizar os pedidos, receber alertas de atendimento humano e liberar o rastreio quando o pedido sai para entrega.
+
+O bot não usa IA generativa: as respostas são pré-configuradas, o que elimina custo por token e evita respostas erradas sobre o cardápio.
 
 ## Equipe
 
@@ -10,8 +15,20 @@ O sistema concentra os pedidos diretos do restaurante e organiza o delivery: ate
 | --- | --- | --- | --- |
 | Angel Moreira Soares Guimarães | 1250103118 | Desenvolvedor | Desenvolvedor Web (Frontend) |
 | Leonan Pinheiro Costa | 1250103989 | Scrum Master | Desenvolvedor Backend e Banco de Dados |
-| Maria Luiza Benevides Cunha | 1250112092 | [A DEFINIR] | [A DEFINIR] |
+| Maria Luiza Benevides Cunha | 1250112092 | Desenvolvedora | Desenvolvedora de Automação e UX/UI |
 | Matheus Frazão Aguiar | [A CONFIRMAR] | Product Owner | Arquiteto de Software e Integrações |
+
+## Tecnologias
+
+| Camada | Tecnologia |
+| --- | --- |
+| Canal com o cliente | WhatsApp Cloud API (oficial da Meta) |
+| Fluxo do bot | n8n ou Typebot (árvores de decisão) |
+| Banco de dados | PostgreSQL ou MySQL |
+| Painel do restaurante | React.js, com atualização por websockets |
+| Organização | Trello (Sprints), GitHub (versionamento), VS Code |
+
+O protótipo em Python deste repositório valida as regras de negócio das estórias com testes de aceitação automáticos.
 
 ## Organização do trabalho
 
@@ -19,30 +36,30 @@ As tarefas das Sprints ficam no quadro do Trello: [Rei da Carne de Sol · Delive
 
 ## Product Backlog
 
-O backlog completo, com épicos, estórias candidatas e regras em discussão, está em [docs/backlog-do-produto.md](docs/backlog-do-produto.md).
+| Estória | Tipo | Título | Situação |
+| --- | --- | --- | --- |
+| US 01 | História do Usuário | Fazer pedido pelo WhatsApp | Em elaboração |
+| [US 02](docs/estorias/US-02-gerenciar-pedidos-e-atendimento-humano.md) | História do Profissional | Gerenciar pedidos e atendimento humano no painel | Especificada |
+| [US 03](docs/estorias/US-03-cadastro-de-profissionais.md) | Estória de apoio | Cadastro de profissionais | Especificada e implementada |
+| US 04 | Estória de usuário | Acumular e resgatar cashback | Candidata |
+| US 05 | Estória de usuário | Identificar o cliente pelo número do WhatsApp | Candidata |
 
-| Épico | Estórias | Situação |
-| --- | --- | --- |
-| E1 · Pedidos e delivery | US 01, US 02 | Especificadas |
-| E2 · Cadastros | [US 03 Profissionais](docs/estorias/US-03-cadastro-de-profissionais.md), US 04 Clientes pelo WhatsApp | US 03 implementada |
-| E3 · Atendimento por WhatsApp (agente de IA) | US 05, US 06 | Candidatas |
-| E4 · Cardápio online | US 07, US 08 | Candidatas |
-| E5 · Fidelidade (pontos e cashback) | US 09 a US 12 | Candidatas |
-
-As regras de negócio, o modelo de dados e as mensagens citadas nas estórias estão no [catálogo de referências](docs/catalogo-de-referencias.md).
+Detalhes e decisões em aberto: [docs/backlog-do-produto.md](docs/backlog-do-produto.md). Requisitos, regras de negócio e mensagens: [catálogo de referências](docs/catalogo-de-referencias.md).
 
 ## Estrutura
 
 ```
 docs/
-  estorias/US-03-cadastro-de-profissionais.md   estória completa (modelo da disciplina)
-  estorias/US-03-cadastro-de-profissionais.pdf  a mesma estória, para entrega
-  catalogo-de-referencias.md                    RNE, MED e MSG
+  proposta/                      Proposta de Projeto (14/11/2026)
+  estorias/                      estórias no modelo da disciplina (Markdown e PDF)
+  backlog-do-produto.md          estórias, prioridades e decisões em aberto
+  catalogo-de-referencias.md     UC, RF, RNF, RN, MED e MSG
+  gerar_pdf.py                   gera o PDF de cada estória
 src/rei_carne_de_sol/
-  mensagens.py                                  textos das MSG
-  profissionais/                                US 03: modelo, validações e regras
+  mensagens.py                   textos das MSG
+  profissionais/                 US 03: modelo, validações e regras
 tests/
-  test_aceitacao_us03.py                        um teste de aceitação por CPO
+  test_aceitacao_us03.py         um teste de aceitação por CPO
 ```
 
 ## Como rodar
@@ -51,23 +68,11 @@ Requer Python 3.10 ou mais novo.
 
 ```bash
 pip install -e ".[dev]"
-pytest -v
+pytest -v                  # testes de aceitação
+python docs/gerar_pdf.py   # regera os PDFs das estórias
 ```
 
-Cada teste tem o nome do padrão de comportamento que verifica, por exemplo `test_cpo_4_3_nao_permite_excluir_profissional_ativo`. Se todos passam, todos os critérios de aceitação da US 03 são atendidos.
-
-## Exemplo de uso
-
-```python
-from rei_carne_de_sol.profissionais import Funcao, ServicoProfissionais
-
-servico = ServicoProfissionais()
-resultado = servico.incluir(
-    "João Souza", "111.444.777-35", "(22) 99999-0000", "joao@email.com",
-    Funcao.ENTREGADOR, cnh="12345678901", placa="RIO2A18",
-)
-print(resultado.textos)  # ['Cadastro realizado com sucesso.']
-```
+Cada teste tem o nome do padrão de comportamento que verifica, por exemplo `test_cpo_4_3_nao_permite_excluir_profissional_ativo`.
 
 ---
 

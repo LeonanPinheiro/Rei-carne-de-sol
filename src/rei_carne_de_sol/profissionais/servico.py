@@ -31,11 +31,12 @@ class Resultado:
 
 
 class ServicoProfissionais:
-    def __init__(self, entregadores_em_rota: Callable[[], Set[int]] = lambda: set()):
-        """`entregadores_em_rota` informa os IDs com lote Em Rota (vem da US 02)."""
+    def __init__(self, entregadores_em_entrega: Callable[[], Set[int]] = lambda: set()):
+        """`entregadores_em_entrega` informa os IDs de entregadores com pedido
+        no status Saiu para Entrega (informação que vem da US 02)."""
         self._profissionais: dict[int, Profissional] = {}
         self._proximo_id = 1
-        self._entregadores_em_rota = entregadores_em_rota
+        self._entregadores_em_entrega = entregadores_em_entrega
 
     # ---------- apoio ----------
     def _erros_de_validacao(self, resultado: Resultado, erros) -> Resultado:
@@ -48,10 +49,10 @@ class ServicoProfissionais:
         numeros = somente_digitos(cpf)
         return next((p for p in self._profissionais.values() if p.cpf == numeros), None)
 
-    def _em_rota(self, profissional: Profissional) -> bool:
+    def _em_entrega(self, profissional: Profissional) -> bool:
         return (
             profissional.funcao == Funcao.ENTREGADOR
-            and profissional.id in self._entregadores_em_rota()
+            and profissional.id in self._entregadores_em_entrega()
         )
 
     def listar(self) -> List[Profissional]:
@@ -59,15 +60,14 @@ class ServicoProfissionais:
 
     # ---------- CPO 1.1 a 1.5 · Incluir ----------
     def incluir(self, nome, cpf, telefone, email, funcao: Funcao,
-                status: Status = Status.ATIVO, cnh=None, placa=None) -> Resultado:
+                status: Status = Status.ATIVO) -> Resultado:
         resultado = Resultado(sucesso=False)
-        erros = validar_profissional(nome, cpf, telefone, email, funcao, cnh, placa)
+        erros = validar_profissional(nome, cpf, telefone, email, funcao)
         if erros:  # CPO 1.4 e CPO 1.5
             return self._erros_de_validacao(resultado, erros)
-        if self._buscar_por_cpf(cpf):  # CPO 1.3 · RNE 06
+        if self._buscar_por_cpf(cpf):  # CPO 1.3 · RN06
             return resultado.adicionar("MSG 02")
 
-        entregador = funcao == Funcao.ENTREGADOR
         profissional = Profissional(
             nome=nome.strip(),
             cpf=somente_digitos(cpf),
@@ -75,8 +75,6 @@ class ServicoProfissionais:
             email=email.strip().lower(),
             funcao=funcao,
             status=status,
-            cnh=somente_digitos(cnh) if entregador else None,
-            placa=placa.upper().replace("-", "") if entregador else None,
             id=self._proximo_id,
         )
         self._profissionais[profissional.id] = profissional
@@ -90,22 +88,17 @@ class ServicoProfissionais:
         atual = self._profissionais.get(id_profissional)
         if atual is None:
             return resultado.adicionar("MSG 11")
-        if "cpf" in novos_dados:  # invariante: o CPF não muda (RNE 06)
+        if "cpf" in novos_dados:  # invariante: o CPF não muda (RN06)
             return resultado.adicionar("MSG 14")
 
         candidato = replace(atual, **novos_dados)
         erros = validar_profissional(
             candidato.nome, candidato.cpf, candidato.telefone, candidato.email,
-            candidato.funcao, candidato.cnh, candidato.placa,
+            candidato.funcao,
         )
         if erros:  # CPO 2.2
             return self._erros_de_validacao(resultado, erros)
 
-        if candidato.funcao == Funcao.ENTREGADOR:
-            candidato.cnh = somente_digitos(candidato.cnh)
-            candidato.placa = candidato.placa.upper().replace("-", "")
-        else:
-            candidato.cnh = candidato.placa = None
         candidato.email = candidato.email.strip().lower()
         candidato.telefone = somente_digitos(candidato.telefone)
         self._profissionais[id_profissional] = candidato
@@ -139,7 +132,7 @@ class ServicoProfissionais:
             return resultado.adicionar("MSG 11")
         if not confirmado:  # CPO 4.2
             return resultado
-        if profissional.ativo or self._em_rota(profissional):  # CPO 4.3 · RNE 08 e 09
+        if profissional.ativo or self._em_entrega(profissional):  # CPO 4.3 · RN08 e RN09
             return resultado.adicionar("MSG 14")
         del self._profissionais[id_profissional]
         resultado.sucesso = True
@@ -150,10 +143,10 @@ class ServicoProfissionais:
         planilha = Workbook()
         aba = planilha.active
         aba.title = "Profissionais"
-        aba.append(["ID", "Nome", "CPF", "Telefone", "E-mail", "Função", "Placa", "Status"])
-        for p in self.listar():  # RNF 01: CPF mascarado e sem CNH
+        aba.append(["ID", "Nome", "CPF", "Telefone", "E-mail", "Função", "Status"])
+        for p in self.listar():  # RNF03: CPF mascarado
             aba.append([p.id, p.nome, p.cpf_mascarado, p.telefone, p.email,
-                        p.funcao.value, p.placa or "", p.status.value])
+                        p.funcao.value, p.status.value])
         caminho = Path(caminho)
         planilha.save(caminho)
         return Resultado(sucesso=True, dados=caminho)
@@ -172,7 +165,7 @@ class ServicoProfissionais:
             profissional = self._profissionais.get(id_profissional)
             if profissional is None:
                 continue
-            if self._em_rota(profissional):  # CPO 7.2 · RNE 09
+            if self._em_entrega(profissional):  # CPO 7.2 · RN09
                 resultado.sucesso = False
                 resultado.dados.append(profissional.id)
                 continue
